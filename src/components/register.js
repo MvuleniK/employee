@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import './register.css';
 import { Link } from 'react-router-dom';
 // import Login from "../components/login";
@@ -60,7 +60,7 @@ class Form extends Component {
 
 
 
-    const[login, setLogin] = useState(true)
+    // const[login, setLogin] = useState(true)
 
 
 
@@ -169,7 +169,7 @@ class Form extends Component {
                 };
               })
 
-              setLogin(!login)
+              window.location='/employee/src/components/login.js';
         }
 
         alert(`User ${this.state.fullName}  Registered Successfully !!!!`)
@@ -221,10 +221,7 @@ class Form extends Component {
         //         console.log(this.state.list[i].fullName);
         //     }
         //   }
-        function handleClick(){
-                setLogin(login)
-            }
-        
+
 
      event.preventDefault()
         
@@ -266,7 +263,7 @@ class Form extends Component {
                     <input type="submit" value="Submit" />
                 </form>
 
-                <p onClick={handleClick}>laready registered? {""}<Link to="/">Login</Link></p>
+                <p>laready registered? {""}<Link to="/">Login</Link></p>
             </div>
             
         )

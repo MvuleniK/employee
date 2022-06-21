@@ -48,6 +48,8 @@ class Login extends React.Component {
     }else if(!this.state.emailog && !this.state.passwordlog){
       alert('Empty!')
       console.log('succussful login')
+      // redirect user to dashboard
+      window.location='/employee/src/components/dashboard.js';
     }else if(this.state.emailog !== pass && this.state.passwordlog !== mail){
       alert('Please recheck you credientials')
     }
@@ -85,7 +87,7 @@ class Login extends React.Component {
 
           </form>
           {/* <p>No account? {""}<Link to="/sign-up">Register</Link></p> */}
-          <p>Not registered yet?{""}<Link to="/sign-up">Register</Link></p>
+          <p>Not registered yet?{""}<Link to="/dashboard">Register</Link></p>
 
 
         </div>
