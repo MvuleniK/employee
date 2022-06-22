@@ -1,15 +1,13 @@
-import React from "react";
-import './login.css'
+import React, { Component } from 'react';
+import "../components/login.css";
 // import { Alert } from "react-bootstrap";
-// import Home from "./Home"; 
-// import Form from './components/form';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 
 
 
 
-class Login extends React.Component {
+class Login extends Component {
   constructor(props) {
     super(props)
 
@@ -18,13 +16,12 @@ class Login extends React.Component {
       passwordlog:"",
 
     }
-    this.handleSubmit=this.handleSubmit.bind(this)
-
+    this.handleLogin=this.handleLogin.bind(this)
   }
 
   emailoghandler = (event) => {
     this.setState({
-      emaillog: event.target.value
+      emailog: event.target.value
     })
   }
 
@@ -37,25 +34,46 @@ class Login extends React.Component {
 
 
   handleLogin = (event) => {
-  
-    let mail = localStorage.getItem("email").replace(/"/g, "");
-    let pass = localStorage.getItem("password").replace(/"/g, "");
+    var accounts = JSON.parse(localStorage.getItem('list'));
 
+  //   for(let current of accounts){
+  //     if(this.state.emailog === current.mail && this.state.passwordlog === current.pass){
+  //       alert('You are logged in , redirecting you to the dashboard')
+  //       // redirect user to dashboard
+  //         window.location='/Landing';
+  //     }else if(!this.state.emailog && !this.state.passwordlog){
+  //       alert('Empty!')
+  //       console.log('succussful login')
+  //       // redirect user to dashboard
+  //       window.location='/dashboard';
+  //     }else if(this.state.emailog !== pass && this.state.passwordlog !== mail){
+  //       alert('Please recheck you credientials')
+  //     }
+  // }
 
-    if(this.state.emailog === mail && this.state.passwordlog === pass){
-      alert('You are logged in , redirecting you to the dashboard')
-      // redirect user to dashboard
-    }else if(!this.state.emailog && !this.state.passwordlog){
-      alert('Empty!')
-      console.log('succussful login')
-      // redirect user to dashboard
-      window.location='/employee/src/components/dashboard.js';
-    }else if(this.state.emailog !== pass && this.state.passwordlog !== mail){
-      alert('Please recheck you credientials')
+    try
+    {
+      let user_list = JSON.parse(localStorage.getItem("list"));
+
+      for(let account of user_list) {
+        if(this.state.emailog == account.email) {
+          if(this.state.passwordlog == account.password) {
+            alert('You are logged in , redirecting you to the dashboard');
+            window.location='/dashboard';
+            throw("");
+          }
+          else {
+            throw("Password is invalid.");
+          }
+        }
+      }
+      throw("Email not found!");
     }
-
+    catch(err)
+    {
+      alert(err);
+    }
     event.preventDefault()
-    
   }
 
 
@@ -69,25 +87,17 @@ class Login extends React.Component {
 
 
 
-      <div className="container">
+      <div className=" container ">
           <form onSubmit={this.handleLogin}>
 
             <h1>Login</h1>
+            <label>Email :</label> <input type="text" value={this.state.emailog} onChange={this.emailoghandler} placeholder="Inital value"/><br />
+            <label>Password :</label> <input type="password" value={this.state.passwordlog} onChange={this.passwordloghandler} placeholder="Password of user..." /><br />
 
-
-            <label>FullName :</label> <input type="text" value={this.state.emailog} onChange={this.emailoghandler} placeholder="User email..." /><br />
-            <label>Email :</label> <input type="password" value={this.state.passwordlog} onChange={this.passwordloghandler} placeholder="Password of user..." /><br />
-
-            {/* <button type="submit" className="btn-login">
-                 Login
-            </button> */}
             <br></br>
             <input type="Submit" value="Submit" />
-
-
           </form>
-          {/* <p>No account? {""}<Link to="/sign-up">Register</Link></p> */}
-          <p>Not registered yet?{""}<Link to="/dashboard">Register</Link></p>
+          <p>Not registered yet? <Link to="/register">Register</Link></p>
 
 
         </div>
@@ -99,14 +109,5 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-
-
-
-
-
-
-
-
 
 

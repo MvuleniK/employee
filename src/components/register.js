@@ -2,10 +2,23 @@ import React, { Component } from 'react';
 // import React, { useState } from 'react';
 import './register.css';
 import { Link } from 'react-router-dom';
-// import Login from "../components/login";
+import Login from "../components/login";
 // import ReactDOM from "react-dom/client";
 // import {BrowserRouter,Routes, Route } from "react-router-dom";
 
+class User {
+    constructor(name,email,password,profession,image,phone_num) {
+        this.fullName = name;
+        this.email = email;
+        this.password = password;
+        this.profession = profession;
+        this.image = image;
+        this.phone = phone_num;
+        this.date = Date();
+    }
+}
+
+let users = [];
 
 class Form extends Component {
     constructor(props) {
@@ -119,10 +132,10 @@ class Form extends Component {
     handleSubmit = (event) => {
 
         // validation for the data input
-        let pwd_expression = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
-        let letters = /^[A-Za-z]+$/;
-        let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        let numFilter = /^\d{10}$/;
+        let pwd_expression =/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
+        let letters =/^[A-Za-z]+$/;
+        let filter =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        let numFilter =/^\d{10}$/;
 
         if(this.state.fullName === ""){
             alert('Please enter your name')
@@ -152,44 +165,36 @@ class Form extends Component {
         //     // localStorage.setItem("profession",JSON.stringify(this.state.profession));
         //     // localStorage.setItem("image",JSON.stringify(this.state.image));
 
-            localStorage.setItem("list", JSON.stringify(this.state.list));
+            // localStorage.setItem("list", JSON.stringify(this.state.list));
+
+            users.push(new User(this.state.fullName,this.state.email,this.state.password,this.state.profession,this.state.image,this.state.phone));
+            localStorage.setItem("list", JSON.stringify(users));
+
+            window.location='/login';
         
 
         // copy a new array and add objects to the array   
-            this.setState(state => {
-                const list = state.list.concat(state);
-                return {
-                  fullName: "",
-                  email: "",
-                  password: "",
-                  profession: "",
-                  image:"",
-                  phone:"",
-                  list,
-                };
-              })
+            // this.setState(state => {
+            //     const list = state.list.concat(state);
+            //     return {
+            //       fullName: "",
+            //       email: "",
+            //       password: "",
+            //       profession: "",
+            //       image:"",
+            //       phone:"",
+            //       list,
+            //     };
+            //   })
 
-              window.location='/employee/src/components/login.js';
+            alert(`User ${this.state.fullName}  Registered Successfully !!!!`)              
         }
 
-        alert(`User ${this.state.fullName}  Registered Successfully !!!!`)
-        
+        // alert(`User ${this.state.fullName}  Registered Successfully !!!!`)
+        //localStorage.setItem("list", JSON.stringify(this.state.list));
 
         // this.setState({
         //     list:[...this.state.list, this.state.fullName]
-        // })
-
-        
-
-        console.log(this.state);
-        // console.log(this.state.list[1].fullName);
-        // this.setState({
-        //     fullName: "",
-        //     email: "",
-        //     password: "",
-        //     profession: "",
-        //     image:"",
-        //     phone:"",
         // })
 
         // this.setState({
@@ -209,17 +214,6 @@ class Form extends Component {
         //       list,
         //     };
         //   })
-
-        //   console.log(this.state);
-        //   if(this.state.list.length > 0) {
-        //     console.log(this.state.list[0].fullName);
-        //   }
-        //   console.log("New Entry");
-
-        //   if(this.state.list.length === 3) {
-        //     for(let i = 0; i < this.state.list.length; i++) {
-        //         console.log(this.state.list[i].fullName);
-        //     }
         //   }
 
 
@@ -247,7 +241,7 @@ class Form extends Component {
                     <label>FullName :</label> <input type="text" value={this.state.fullName} onChange={this.fullnamehandler} placeholder="FullName..." /><br />
                     <label>Email :</label> <input type="text" value={this.state.email} onChange={this.emailhandler} placeholder="Email..." /><br />
                     <label>Password :</label> <input type="password" value={this.state.password} onChange={this.passwordhandler} placeholder="Password..." /><br />
-                    <label>Phone number :</label> <input type="password" value={this.state.phone} onChange={this.phonehandler} placeholder="Phone..." /><br />
+                    <label>Phone number :</label> <input type="text" value={this.state.phone} onChange={this.phonehandler} placeholder="Phone..." /><br />
                     <label>Profession :</label> <input type="text" value={this.state.profession} onChange={this.professionhandler} placeholder="Profession..." /><br />
                     {/* <label>Select Department :</label><select onChange={this.professionhandler} defaultValue="Select department">
                         <option defaultValue>Select department</option>
@@ -263,7 +257,7 @@ class Form extends Component {
                     <input type="submit" value="Submit" />
                 </form>
 
-                <p>laready registered? {""}<Link to="/">Login</Link></p>
+                <p>already registered? <Link to = "/login" >Login</Link></p>
             </div>
             
         )
